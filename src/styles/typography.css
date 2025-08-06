@@ -1,0 +1,121 @@
+/* Typography System */
+
+/* Headings */
+.heading-1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-6);
+}
+
+.heading-2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-5);
+}
+
+.heading-3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-4);
+}
+
+.heading-4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+}
+
+.heading-5 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+}
+
+/* Body Text */
+.text-large {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-gray-700);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-700);
+}
+
+.text-small {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-600);
+}
+
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-500);
+}
+
+/* Text Colors */
+.text-primary {
+  color: var(--color-primary-600);
+}
+
+.text-success {
+  color: var(--color-success-600);
+}
+
+.text-warning {
+  color: var(--color-warning-600);
+}
+
+.text-danger {
+  color: var(--color-danger-600);
+}
+
+.text-muted {
+  color: var(--color-gray-500);
+}
+
+/* Text Weights */
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .heading-1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .heading-2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .heading-3 {
+    font-size: var(--font-size-xl);
+  }
+}
+
