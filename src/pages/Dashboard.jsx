@@ -52,27 +52,35 @@ const Dashboard = () => {
   ]
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Overview of your business operations</p>
+    <div className="space-y-8">
+      <div className="text-center md:text-left">
+        <h1 className="heading-1 mb-2">Dashboard</h1>
+        <p className="text-large text-muted">Overview of your business operations</p>
       </div>
 
       {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {metrics.map((metric, index) => {
           const Icon = metric.icon
+          const isPositive = metric.change.startsWith('+')
           return (
-            <div key={index} className="card">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">{metric.title}</p>
-                  <p className="text-2xl font-bold text-gray-900">{metric.value}</p>
-                  <p className={`text-sm ${metric.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                    {metric.change} from last month
-                  </p>
+            <div key={index} className="card group cursor-pointer">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <p className="text-small text-muted mb-2">{metric.title}</p>
+                  <p className="text-3xl font-bold text-gray-900 mb-1">{metric.value}</p>
+                  <div className="flex items-center gap-1">
+                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                      isPositive 
+                        ? 'bg-success-100 text-success-600' 
+                        : 'bg-danger-100 text-danger-600'
+                    }`}>
+                      {metric.change}
+                    </span>
+                    <span className="text-xs text-muted">from last month</span>
+                  </div>
                 </div>
-                <div className={`p-3 rounded-full ${metric.color}`}>
+                <div className={`p-3 rounded-xl ${metric.color} group-hover:scale-110 transition-transform duration-200`}>
                   <Icon className="h-6 w-6 text-white" />
                 </div>
               </div>
@@ -84,28 +92,79 @@ const Dashboard = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">
-          <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="heading-4 mb-0">Revenue Trend</h3>
+              <p className="text-small text-muted">Monthly performance overview</p>
+            </div>
+            <TrendingUp className="h-5 w-5 text-success-600" />
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={salesData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={2} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis 
+                dataKey="month" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
+              />
+              <YAxis 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
+              />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: 'white',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="revenue" 
+                stroke="#3b82f6" 
+                strokeWidth={3}
+                dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         <div className="card">
-          <h3 className="text-lg font-semibold mb-4">Inventory Status</h3>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="heading-4 mb-0">Inventory Status</h3>
+              <p className="text-small text-muted">Current stock vs reorder points</p>
+            </div>
+            <Package className="h-5 w-5 text-primary-600" />
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={inventoryData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="product" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="stock" fill="#10b981" />
-              <Bar dataKey="reorder" fill="#ef4444" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis 
+                dataKey="product" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
+              />
+              <YAxis 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
+              />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: 'white',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <Bar dataKey="stock" fill="#10b981" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="reorder" fill="#ef4444" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -113,27 +172,42 @@ const Dashboard = () => {
 
       {/* Recent Activity */}
       <div className="card">
-        <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="heading-4 mb-0">Recent Activity</h3>
+            <p className="text-small text-muted">Latest updates from your business</p>
+          </div>
+          <button className="btn btn-outline text-xs">View All</button>
+        </div>
         <div className="space-y-4">
-          <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-            <ShoppingCart className="h-5 w-5 text-blue-600" />
-            <div>
-              <p className="font-medium">New order from Acme Coffee Shop</p>
-              <p className="text-sm text-gray-600">Order #1234 - $1,500</p>
+          <div className="flex items-start space-x-4 p-4 bg-primary-50 rounded-xl border border-primary-100 hover:bg-primary-100 transition-colors cursor-pointer">
+            <div className="p-2 bg-primary-600 rounded-lg">
+              <ShoppingCart className="h-4 w-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-gray-900">New order from Acme Coffee Shop</p>
+              <p className="text-small text-muted">Order #1234 - $1,500</p>
+              <p className="text-xs text-muted mt-1">2 minutes ago</p>
             </div>
           </div>
-          <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
-            <AlertTriangle className="h-5 w-5 text-yellow-600" />
-            <div>
-              <p className="font-medium">Low stock alert: Sugar</p>
-              <p className="text-sm text-gray-600">Only 30 units remaining</p>
+          <div className="flex items-start space-x-4 p-4 bg-warning-50 rounded-xl border border-warning-100 hover:bg-warning-100 transition-colors cursor-pointer">
+            <div className="p-2 bg-warning-600 rounded-lg">
+              <AlertTriangle className="h-4 w-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-gray-900">Low stock alert: Sugar</p>
+              <p className="text-small text-muted">Only 30 units remaining</p>
+              <p className="text-xs text-muted mt-1">15 minutes ago</p>
             </div>
           </div>
-          <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-            <FileText className="h-5 w-5 text-green-600" />
-            <div>
-              <p className="font-medium">Invoice paid</p>
-              <p className="text-sm text-gray-600">Invoice #INV-567 - $800</p>
+          <div className="flex items-start space-x-4 p-4 bg-success-50 rounded-xl border border-success-100 hover:bg-success-100 transition-colors cursor-pointer">
+            <div className="p-2 bg-success-600 rounded-lg">
+              <FileText className="h-4 w-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-gray-900">Invoice paid</p>
+              <p className="text-small text-muted">Invoice #INV-567 - $800</p>
+              <p className="text-xs text-muted mt-1">1 hour ago</p>
             </div>
           </div>
         </div>
